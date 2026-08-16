@@ -4,14 +4,17 @@
 
 ---
 
-## 🎬 Demo Video & Presentation
+## 🎬 Interactive System Video Walkthrough
 
-> [!TIP]
-> View our cinematic end-to-end automated demo generated via Playwright & Testreel:
-> 
-> 📹 **[Watch MedTwin Full System Video Walkthrough](testreel-output/medtwin-demo.mp4)**
-> 
-> *Demonstrates patient login, 3D digital twin organ visualization, real-time vitals, medication schedule, patient consent & 6-digit access PIN generation, doctor login, dynamic PIN authorization, AI drug safety check, clinical note creation, and administrative audit logging.*
+<div align="center">
+
+<video src="medtwin-demo.mp4" controls="controls" width="100%" style="max-width: 100%; border-radius: 12px;"></video>
+
+*📹 **MedTwin End-to-End Demo Walkthrough**: Patient Login → 3D Digital Twin Organ Telemetry → Access PIN Generation → Doctor Dynamic Authorization → AI Drug Safety Check → Clinical Assessment Note*
+
+*(If your browser does not render inline HTML5 video, [click here to download or open medtwin-demo.mp4](medtwin-demo.mp4))*
+
+</div>
 
 ---
 

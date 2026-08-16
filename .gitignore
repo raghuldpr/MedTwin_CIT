@@ -22,6 +22,9 @@ testreel-output/
 playwright-report/
 test-results/
 
+# Explicitly Track GitHub Demo Video
+!medtwin-demo.mp4
+
 # Uploads & Storage (keep .gitkeep)
 backend/uploads/documents/*
 !backend/uploads/documents/.gitkeep
