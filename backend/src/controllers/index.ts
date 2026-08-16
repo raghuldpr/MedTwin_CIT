@@ -1,0 +1,15 @@
+export * from './health.controller';
+export * from './auth.controller';
+export * from './consent.controller';
+export * from './document.controller';
+export * from './adminAudit.controller';
+export * from './clinicalNote.controller';
+export * from './prescription.controller';
+export * from './drugSafety.controller';
+export * from './documentOcr.controller';
+export * from './emergencyAccess.controller';
+export * from './voiceCommand.controller';
+export * from './admin.controller';
+export * from './compliance.controller';
+export * as patientController from './patient.controller';
+export * as doctorPatientController from './doctorPatient.controller';

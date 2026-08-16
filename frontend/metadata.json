@@ -1,0 +1,7 @@
+{
+  "name": "MedTwin - Digital Twin Health Platform",
+  "description": "Interactive MedTwin digital twin platform featuring desktop health dashboard, mobile home view, and dark-themed 3D heart organ detail.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+

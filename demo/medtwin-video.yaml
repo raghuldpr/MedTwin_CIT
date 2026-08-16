@@ -1,0 +1,165 @@
+# Testreel Recording Definition for MedTwin Prototype
+# Run with: npx testreel demo/medtwin-video.yaml
+$schema: "../node_modules/testreel/recording-definition.schema.json"
+
+url: "http://localhost:5173/login"
+
+viewport:
+  width: 1440
+  height: 900
+
+outputSize:
+  width: 1920
+  height: 1080
+
+outputFormat: "mp4"
+speed: 1.0
+colorScheme: "dark"
+
+chrome:
+  enabled: true
+  titleBarHeight: 38
+  titleBarColor: "#1e1e2e"
+  trafficLights: true
+  url: "https://app.medtwin.health"
+
+background:
+  enabled: true
+  gradient:
+    from: "#0f172a"
+    to: "#1e1b4b"
+  padding: 60
+  borderRadius: 16
+
+cursor:
+  enabled: true
+  style: "pointer"
+  rippleColor: "rgba(99, 102, 241, 0.6)"
+  rippleSize: 80
+
+steps:
+  # 1. Patient Login (0-15s)
+  - action: "navigate"
+    url: "http://localhost:5173/login"
+  - action: "wait"
+    ms: 1500
+  - action: "type"
+    selector: "input[placeholder='you@example.com']"
+    text: "patient@medtwin.test"
+  - action: "type"
+    selector: "input[placeholder='Your password']"
+    text: "Patient123!"
+  - action: "click"
+    selector: "button[type='submit']"
+  - action: "wait"
+    ms: 2000
+
+  # 2. Digital Twin Organ Interactions (15-25s)
+  - action: "click"
+    selector: "#nav-digital-twin"
+  - action: "wait"
+    ms: 1500
+  - action: "click"
+    selector: "#organ-btn-heart, div:has-text('Heart')"
+  - action: "wait"
+    ms: 1000
+  - action: "click"
+    selector: "#organ-btn-lungs, div:has-text('Lungs')"
+  - action: "wait"
+    ms: 1000
+  - action: "click"
+    selector: "#organ-btn-brain, div:has-text('Brain')"
+  - action: "wait"
+    ms: 1200
+
+  # 3. Vitals & Medications (25-32s)
+  - action: "click"
+    selector: "#nav-vitals"
+  - action: "wait"
+    ms: 1500
+  - action: "click"
+    selector: "#nav-medications"
+  - action: "wait"
+    ms: 1500
+
+  # 4. Consent & Access PIN Generation (32-42s)
+  - action: "click"
+    selector: '[id="nav-consent-&-access"]'
+  - action: "wait"
+    ms: 1500
+  - action: "click"
+    selector: "button:has-text('Grant New Access')"
+  - action: "wait"
+    ms: 1000
+  - action: "click"
+    selector: "button:has-text('FULL')"
+  - action: "click"
+    selector: "button:has-text('Generate PIN')"
+  - action: "wait"
+    ms: 2500
+
+  # 5. Patient Logout & Doctor Login (42-50s)
+  - action: "click"
+    selector: "aside >> text=Hardish Sharma"
+  - action: "click"
+    selector: "button:has-text('Sign Out')"
+  - action: "wait"
+    ms: 1500
+  - action: "navigate"
+    url: "http://localhost:5173/login"
+  - action: "type"
+    selector: "input[placeholder='you@example.com']"
+    text: "doctor@medtwin.test"
+  - action: "type"
+    selector: "input[placeholder='Your password']"
+    text: "Doctor123!"
+  - action: "click"
+    selector: "button[type='submit']"
+  - action: "wait"
+    ms: 2000
+
+  # 6. Doctor Authorization & Digital Twin (50-70s)
+  - action: "click"
+    selector: "button:has-text('Overview')"
+  - action: "wait"
+    ms: 1500
+  - action: "click"
+    selector: "button:has-text('Vitals')"
+  - action: "wait"
+    ms: 1500
+  - action: "click"
+    selector: "button:has-text('Meds')"
+  - action: "wait"
+    ms: 1500
+
+  # 7. AI Drug Safety (70-80s)
+  - action: "click"
+    selector: "button:has-text('Drug Safety AI')"
+  - action: "wait"
+    ms: 1200
+  - action: "type"
+    selector: "input[placeholder='Proposed medication (e.g. Lisinopril 10mg)']"
+    text: "Lisinopril 10mg"
+  - action: "click"
+    selector: "button:has-text('Run Safety Check')"
+  - action: "wait"
+    ms: 2500
+
+  # 8. Clinical Assessment Note (80-87s)
+  - action: "click"
+    selector: "button:has-text('Notes')"
+  - action: "wait"
+    ms: 1000
+  - action: "type"
+    selector: "textarea[placeholder*='clinical assessment']"
+    text: "Patient evaluated. Blood pressure 120/80 mmHg well controlled. Continue current Amlodipine regimen."
+  - action: "click"
+    selector: "button:has-text('Save Clinical Note')"
+  - action: "wait"
+    ms: 2000
+
+  # 9. Final MedTwin Branding View (87-90s)
+  - action: "click"
+    selector: "button:has-text('Overview')"
+  - action: "wait"
+    ms: 3000

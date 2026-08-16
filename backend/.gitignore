@@ -1,0 +1,21 @@
+# Environment Variables
+.env
+.env.*
+!.env.example
+
+# Dependencies & Build Output
+node_modules/
+build/
+dist/
+coverage/
+
+# Uploads & Storage (keep .gitkeep)
+uploads/documents/*
+!uploads/documents/.gitkeep
+
+# System & Logs
+*.log
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

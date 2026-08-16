@@ -1,0 +1,265 @@
+# MedTwin – Clinical Patient Digital Twin Platform
+
+> **AI-Powered Digital Twin Ecosystem for Patient-Centric Health Ownership, Dynamic Consent, and Real-Time Telemetry Security**
+
+---
+
+## 🎬 Demo Video & Presentation
+
+> [!TIP]
+> View our cinematic end-to-end automated demo generated via Playwright & Testreel:
+> 
+> 📹 **[Watch MedTwin Full System Video Walkthrough](testreel-output/medtwin-demo.mp4)**
+> 
+> *Demonstrates patient login, 3D digital twin organ visualization, real-time vitals, medication schedule, patient consent & 6-digit access PIN generation, doctor login, dynamic PIN authorization, AI drug safety check, clinical note creation, and administrative audit logging.*
+
+---
+
+## 💡 Problem Statement
+
+Modern healthcare systems face severe data fragmentation and privacy bottlenecks:
+1. **Siloed Patient Records**: Patient health data is scattered across disparate EHR systems, lab portals, and diagnostic imaging centers.
+2. **Loss of Patient Agency**: Patients lack real-time granular control over who accesses their sensitive electronic Protected Health Information (ePHI).
+3. **Clinical Overload & Adverse Interactions**: Doctors spend valuable clinical time synthesizing fragmented records, increasing the risk of adverse drug interactions and missed contraindications.
+4. **Audit Vulnerabilities**: Legacy health logs lack tamper-evident verification, making compliance auditing difficult and reactive.
+
+---
+
+## 🩺 Our Solution
+
+**MedTwin** transforms static medical records into a living **Clinical Patient Digital Twin Platform**. 
+
+By unifying patient vitals, active medications, known allergies, diagnostic laboratory records, and organ telemetry into an interactive visual digital twin, MedTwin gives patients total ownership over their health records while equipping clinicians with instant, AI-assisted safety insights.
+
+---
+
+## ✨ Why MedTwin is Different
+
+- **Patient-Centric Zero-Trust Consent**: Doctors cannot access clinical patient records without explicit patient authorization via a temporary, cryptographically generated 6-digit access PIN.
+- **Biomedical Organ Visualizer**: Interactive digital twin rendering system mapping live vital signs to organ health (Heart, Lungs, Brain, Kidneys, Digestive, Hepatic, Renal, Endocrine).
+- **Server-Side Gemini AI Pipeline**: Instant AI medical document OCR extraction and AI-assisted Drug Safety contraindication analysis using Google Gemini models.
+- **Tamper-Evident SHA-256 Audit Trail**: Merkle-like chained hash verification for all system operations.
+
+---
+
+## 🌟 Key Features
+
+### 👤 Patient Workflow
+- **Digital Twin Dashboard**: Real-time visual display of overall health status, active organ status, and recent vitals.
+- **Biomedical Telemetry**: Continuous heart rate, blood pressure, SpO2, blood glucose, and temperature monitoring.
+- **Granular Consent Management**: Issue time-bound (`1 hour`, `24 hours`, `7 days`) doctor access consents with customizable permission levels (`FULL` vs `LIMITED`).
+- **Dynamic 6-Digit PIN Generation**: Instantly generate encrypted, short-lived 6-digit authorization PINs for attending physicians.
+- **Medical Document Vault**: Upload lab reports, discharge summaries, and prescriptions with automated Gemini AI OCR extraction.
+
+### 🩺 Doctor Workflow
+- **PIN Authorization Verification**: Enter patient ID and 6-digit PIN to gain temporary access to patient digital twins.
+- **Consented Patient Digital Twin View**: Access organ-by-organ health status, vital sign trends, and complete medication history.
+- **AI Drug Safety Engine**: Run real-time AI safety checks before prescribing new medications to detect potential drug-drug interactions or allergen contraindications.
+- **Clinical Assessment Notes**: Save signed clinical assessment notes directly to patient records.
+- **Emergency Break-Glass Access**: Override consent with mandatory clinical justification in emergency scenarios (triggers high-priority audit alerts).
+
+### 🛡️ Admin Workflow
+- **Compliance Governance Dashboard**: Real-time monitoring of active consents, authorization rates, and system security posture.
+- **Tamper-Evident Audit Log Verification**: Audit log inspection with built-in SHA-256 integrity chain verification to detect unauthorized database alterations.
+
+---
+
+## 🤖 AI Capabilities
+
+- **Medical Document OCR**: Automatic extraction of lab values, diagnostic summaries, and doctor recommendations from uploaded PDFs and images via backend Gemini 3.7 Flash integration.
+- **AI Drug Safety Contraindication Check**: Multi-factor clinical cross-referencing comparing proposed medications against active prescriptions and known patient allergies.
+
+---
+
+## ♿ Accessibility & UI Excellence
+
+- **Modern Glassmorphic UI**: Vibrant, responsive dark-mode layout designed with modern typography, smooth color gradients, and micro-animations.
+- **Accessible Controls**: Voice command assistant integration supporting hands-free clinical intent navigation.
+
+---
+
+## 🔒 Security Architecture & HIPAA-Aligned Principles
+
+> [!IMPORTANT]
+> **HIPAA Safeguards & Legal Disclaimer**
+> 
+> **MedTwin is designed with HIPAA-aligned privacy and security principles in mind.** The prototype demonstrates technical controls relevant to protecting electronic protected health information (ePHI), including role-based access control (RBAC), patient-controlled consent management, tamper-evident audit logging, secure credential handling, least-privilege data access, and protection of sensitive configuration.
+> 
+> **Important:** This hackathon prototype has not undergone an independent HIPAA compliance audit or certification. HIPAA compliance in a production deployment would require organizational, administrative, physical, and technical safeguards, policies, risk assessments, BAAs where applicable, and formal compliance validation.
+
+### Implemented Technical Safeguards
+1. **Role-Based Access Control (RBAC)**: Enforced across `PATIENT`, `DOCTOR`, and `ADMIN` boundaries via JWT middleware.
+2. **Patient Ownership & Dynamic Consent**: Access requires a short-lived 6-digit PIN (`crypto.randomInt`) hashed with SHA-256 (`crypto.createHash`). Automatic lock-out after 5 failed attempts.
+3. **Emergency Break-Glass Logging**: Instant audit recording with mandatory clinical justification string.
+4. **Tamper-Evident Audit Logging**: Chained SHA-256 hashes (`auditHash.util.ts`) protecting audit trails against retroactive database tampering.
+5. **Backend Secret Isolation**: Gemini API keys (`GEMINI_API_KEY`) remain strictly on the Express backend node server. Zero key exposure to client-side JavaScript.
+6. **Input Sanitization & Rate Limiting**: Protection against NoSQL query operator injection and brute-force authorization attacks.
+
+---
+
+## 🛠️ Technology Stack
+
+- **Frontend**: React 18, TypeScript, Vite, TailwindCSS, Lucide Icons, Material Symbols
+- **Backend**: Node.js, Express, TypeScript, Mongoose / MongoDB
+- **AI Engine**: Google Gemini API (`@google/genai` SDK)
+- **Automation & Video**: Playwright, Testreel
+- **Security & Crypto**: JSON Web Tokens (JWT), Bcrypt, SHA-256, Node Crypto
+
+---
+
+## 📁 Project Structure
+
+```text
+medtwin_proto/
+│
+├── README.md                 # Project master documentation
+├── LICENSE                   # Open-source MIT License
+├── .gitignore                # Root gitignore rules
+├── package.json              # Root project dependencies & automation scripts
+│
+├── frontend/                 # React + TypeScript + Vite UI
+│   ├── package.json
+│   ├── vite.config.ts
+│   ├── .env.example          # Safe frontend env template
+│   ├── src/
+│   │   ├── components/       # Digital Twin & UI components
+│   │   ├── views/            # Patient, Doctor, Admin, Login views
+│   │   ├── services/         # Centralized API service client
+│   │   └── context/          # Authentication & state context
+│   └── public/
+│
+├── backend/                  # Node.js + Express + MongoDB Server
+│   ├── package.json
+│   ├── tsconfig.json
+│   ├── .env.example          # Safe backend env template
+│   ├── src/
+│   │   ├── config/           # Database & environment configuration
+│   │   ├── controllers/      # Auth, Patient, Doctor, Admin controllers
+│   │   ├── middleware/       # Auth, RBAC, Consent, Security headers
+│   │   ├── models/           # Mongoose schemas (User, Consent, AuditLog, etc.)
+│   │   ├── routes/           # REST API routes (/api/*)
+│   │   ├── services/         # Business logic, Gemini AI & OCR services
+│   │   ├── scripts/          # Master hackathon seed script
+│   │   └── utils/            # Hashing, Audit, Logger, PIN generator
+│   └── uploads/
+│       └── documents/        # Local runtime upload storage (.gitkeep)
+│
+├── demo/                     # Automated Playwright & Testreel scripts
+│   ├── medtwin-demo.js       # Playwright end-to-end interactive demo
+│   ├── medtwin-recording.js  # Testreel cinematic MP4 video runner
+│   └── medtwin-video.yaml    # Testreel video configuration schema
+│
+└── docs/                     # Technical documentation
+    └── SECURITY.md           # Security & compliance architecture reference
+```
+
+---
+
+## 🚀 Installation & Setup
+
+### Prerequisites
+- **Node.js**: v18.0 or higher
+- **MongoDB**: Local MongoDB instance (`mongodb://localhost:27017`) or MongoDB Atlas URI
+
+---
+
+### 1. Environment Configuration
+
+Copy the `.env.example` templates in both `backend` and `frontend`:
+
+#### Backend Configuration
+```bash
+cp backend/.env.example backend/.env
+```
+
+Configure `backend/.env`:
+```env
+PORT=3001
+NODE_ENV=development
+MONGODB_URI=mongodb://localhost:27017/medtwin
+JWT_SECRET=replace_with_a_secure_random_secret
+GEMINI_API_KEY=your_gemini_api_key_here
+ALLOWED_ORIGINS=http://localhost:5173,http://localhost:3000
+```
+
+#### Frontend Configuration
+```bash
+cp frontend/.env.example frontend/.env
+```
+
+Configure `frontend/.env`:
+```env
+VITE_API_BASE_URL=http://localhost:3001
+```
+
+---
+
+### 2. Backend Installation & Startup
+
+```bash
+cd backend
+npm install
+npm run dev
+```
+
+The backend server will initialize on `http://localhost:3001`. On startup, it will automatically connect to MongoDB and seed master hackathon demo accounts.
+
+---
+
+### 3. Frontend Installation & Startup
+
+Open a second terminal window:
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+The frontend development server will launch on `http://localhost:5173`.
+
+---
+
+## 🔑 Synthetic Hackathon Demo Credentials
+
+The backend automatically seeds three synthetic demo accounts for testing and evaluation:
+
+| Account Type | Email | Password | Role / Access Details |
+| :--- | :--- | :--- | :--- |
+| **Patient** | `patient@medtwin.test` | `Patient123!` | Hardish Sharma (Patient ID generated in dashboard) |
+| **Doctor** | `doctor@medtwin.test` | `Doctor123!` | Dr. Priya Sharma (Requires patient 6-digit access PIN) |
+| **Admin** | `admin@medtwin.test` | `Admin123!` | MedTwin Governance Admin |
+
+> *Note: These are synthetic demo credentials for hackathon evaluation.*
+
+---
+
+## 🎬 Running Automated Demos & Video Generation
+
+### 1. Run Interactive Playwright Automation
+Ensure both frontend (`http://localhost:5173`) and backend (`http://localhost:3001`) are running:
+
+```bash
+npm run demo:playwright
+```
+
+### 2. Generate Cinematic Testreel Demo Video
+Generates an MP4 recording (`testreel-output/medtwin-demo.mp4`) with macOS window chrome, gradient background, and animated cursor movements:
+
+```bash
+npm run demo:video
+```
+
+---
+
+## ⚠️ Limitations & Future Roadmap
+
+- **Prototype Scope**: Current prototype runs against local or in-memory MongoDB. Production deployments require MongoDB Atlas Enterprise with encryption at rest.
+- **HL7 FHIR / SMART on FHIR**: Future iterations will integrate native FHIR R4 API adapters to sync directly with institutional EMR systems (Epic, Cerner).
+- **Wearable Sensor Streaming**: Real-time WebSocket ingestion for continuous Apple HealthKit / Garmin telemetry integration.
+
+---
+
+## 📄 License
+
+This project is open-source and available under the [MIT License](LICENSE).

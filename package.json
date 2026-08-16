@@ -1,0 +1,18 @@
+{
+  "name": "medtwin-prototype",
+  "version": "1.0.0",
+  "description": "MedTwin – Clinical Patient Digital Twin Platform",
+  "private": true,
+  "scripts": {
+    "demo:video": "node demo/medtwin-recording.js",
+    "demo:playwright": "node demo/medtwin-demo.js",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "build:backend": "cd backend && npm run build",
+    "build:frontend": "cd frontend && npm run build"
+  },
+  "devDependencies": {
+    "playwright": "^1.62.1",
+    "testreel": "^0.2.0"
+  }
+}
