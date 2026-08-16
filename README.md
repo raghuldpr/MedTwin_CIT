@@ -6,6 +6,10 @@
 
 ## 🎬 Interactive System Video Walkthrough
 
+
+https://github.com/user-attachments/assets/5992beb3-2f2f-4dec-bb0f-a6fb694201a9
+
+
 <p align="center">
   <strong>📹 MedTwin End-to-End Demo Walkthrough</strong><br/>
   Patient Login → 3D Digital Twin Organ Telemetry → Access PIN Generation
@@ -20,7 +24,7 @@ after dragging/uploading medtwin-demo.mp4 into the GitHub README web editor
 -->
 
 <div align="center">
-  <video src="GITHUB_VIDEO_ATTACHMENT_URL" controls width="900" style="max-width: 100%; border-radius: 12px;"></video>
+  <video src="https://github.com/user-attachments/assets/5992beb3-2f2f-4dec-bb0f-a6fb694201a9" controls width="900" style="max-width: 100%; border-radius: 12px;"></video>
 </div>
 
 <p align="center">
