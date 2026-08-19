@@ -4,6 +4,8 @@
   "description": "MedTwin – Clinical Patient Digital Twin Platform",
   "private": true,
   "scripts": {
+    "start": "node start.js",
+    "dev": "node start.js",
     "demo:video": "node demo/medtwin-recording.js",
     "demo:playwright": "node demo/medtwin-demo.js",
     "dev:backend": "cd backend && npm run dev",

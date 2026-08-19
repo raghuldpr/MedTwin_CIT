@@ -1,4 +1,4 @@
-﻿/** Doctor API Service — backend contract-accurate, no mock fallbacks. */
+/** Doctor API Service — backend contract-accurate. */
 import { post, get } from './api';
 import type {
   BackendVital, BackendMedication, BackendAllergy, BackendOrgan, BackendDocument, BackendNote, BackendPrescription,

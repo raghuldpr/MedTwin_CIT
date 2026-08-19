@@ -72,10 +72,10 @@ export const authRateLimiter = createRateLimiter({
   prefix: 'auth',
 });
 
-// 2. Doctor PIN Verification Rate Limiter: max 5 requests / 15 minutes
+// 2. Doctor PIN Verification Rate Limiter: max 200 requests in dev / 5 in prod
 export const pinRateLimiter = createRateLimiter({
   windowMs: 15 * 60 * 1000,
-  max: 5,
+  max: process.env.NODE_ENV === 'production' ? 5 : 200,
   message: 'Too many failed PIN verification attempts. Please try again after 15 minutes.',
   prefix: 'pin',
 });

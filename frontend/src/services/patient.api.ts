@@ -1,18 +1,15 @@
-﻿/**
- * Patient API Service — matches backend contracts exactly.
- * Never falls back to mock data.
+/**
+ * Patient API Service — backend contract-accurate.
  */
 import { get, post, put, del, postForm } from './api';
-
-// ---- Backend Model Types (source of truth) ----
 
 export interface BackendUser {
   id: string;
   name: string;
   email: string;
-  role: string;
-  isActive: boolean;
-  status: string;
+  role: 'PATIENT' | 'DOCTOR' | 'ADMIN';
+  isActive?: boolean;
+  status?: string;
   createdAt?: string;
   updatedAt?: string;
 }
@@ -38,6 +35,7 @@ export interface BackendVital {
   systolicBP?: number;
   diastolicBP?: number;
   spo2?: number;
+  respiratoryRate?: number;
   bloodGlucose?: number;
   temperatureC?: number;
   recordedAt: string;
@@ -126,8 +124,6 @@ export interface BackendPrescription {
   validUntil?: string;
   createdAt: string;
 }
-
-// ---- API Calls ----
 
 export const patientApi = {
   getProfile: () =>

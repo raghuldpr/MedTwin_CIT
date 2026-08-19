@@ -1,15 +1,13 @@
-﻿/** Voice Command API Service */
 import { post } from './api';
 
 export interface VoiceCommandResult {
-  intent: string;
-  allowed: boolean;
-  message: string;
-  targetEndpoint: string | null;
-  requiresParameters: boolean;
+  action: 'NAVIGATE' | 'LOG_VITAL' | 'SUMMARIZE' | 'UNKNOWN';
+  target?: string;
+  responseMessage: string;
+  data?: Record<string, unknown>;
 }
 
 export const voiceApi = {
-  sendCommand: (command: string) =>
+  processCommand: (command: string) =>
     post<VoiceCommandResult>('/api/voice/command', { command }),
 };

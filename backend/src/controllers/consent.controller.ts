@@ -130,6 +130,8 @@ export const revokeConsentHandler = async (
   }
 };
 
+import { resolvePatientId } from '../utils/resolvePatientId';
+
 /**
  * POST /api/doctor/consents/verify
  * Doctor verifies patient-provided 6-digit PIN to establish authorization.
@@ -152,7 +154,12 @@ export const verifyDoctorPinHandler = async (
       throw new AppError('Missing required 6-digit PIN in request body.', 400);
     }
 
-    const result = await verifyDoctorPin(req.user.id, patientId, String(pin));
+    const resolvedId = await resolvePatientId(String(patientId));
+    if (!resolvedId) {
+      throw new AppError('Patient ID or alias not found. Please enter a valid Patient ID, email, or alias (e.g. patient1).', 400);
+    }
+
+    const result = await verifyDoctorPin(req.user.id, resolvedId, String(pin));
 
     // Record audit log for successful PIN verification
     await createAuditLog({

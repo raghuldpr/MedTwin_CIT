@@ -1,9 +1,8 @@
-﻿/**
+/**
  * AuthContext — JWT auth, session persistence, role-based state.
- * Backend is source of truth. Never uses mock data.
  */
 import React, { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
-import { apiRequest, setStoredToken, clearStoredToken, getStoredToken, registerUnauthorizedCallback, ApiError } from '../services/api';
+import { apiRequest, setStoredToken, clearStoredToken, getStoredToken, registerUnauthorizedCallback } from '../services/api';
 import type { BackendUser } from '../services/patient.api';
 
 interface AuthState {
@@ -43,13 +42,10 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
     setUser(null);
   }, []);
 
-  // Register the 401 callback so api.ts can trigger logout automatically
   useEffect(() => { registerUnauthorizedCallback(logout); }, [logout]);
 
-  // Check health + restore session on mount
   useEffect(() => {
     const init = async () => {
-      // 1. Check backend health
       try {
         await fetch('/api/health');
         setBackendOnline(true);
@@ -59,7 +55,6 @@ export const AuthProvider: React.FC<Props> = ({ children }) => {
         return;
       }
 
-      // 2. Restore session if token exists
       const stored = getStoredToken();
       if (!stored) { setIsLoading(false); return; }
 

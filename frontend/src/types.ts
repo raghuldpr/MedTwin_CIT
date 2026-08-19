@@ -1,91 +1,91 @@
-export interface PatientProfile {
+export interface Patient {
   id: string;
   name: string;
-  patientId: string;
   age: number;
-  gender: string;
+  gender: 'Male' | 'Female';
   bloodGroup: string;
-  avatarUrl: string;
-  email: string;
-  phone: string;
-  address: string;
-  emergencyContact: string;
+  weight: string;
+  height: string;
+  patientId: string;
+  lastSynced: string;
+  avatar: string;
+  twinGender: 'male' | 'female';
 }
 
-export type OrganId = 'heart' | 'brain' | 'lungs' | 'kidneys' | 'liver' | 'stomach' | 'bladder' | 'muscles' | 'bones' | 'skin';
-
-export interface OrganStatus {
-  id: OrganId;
+export interface VitalMetric {
+  id: string;
   name: string;
-  status: 'Stable' | 'Healthy' | 'Good' | 'Normal' | 'Strong' | 'Attention' | 'Critical';
-  statusColor: string; // Tailwind text color class
-  badgeColor: string;
+  value: string | number;
+  unit: string;
+  status: 'normal' | 'warning' | 'critical' | 'good' | 'stable';
+  normalRange: string;
+  iconName: string;
+  color: string;
+  trend?: number[];
+}
+
+export interface OrganDetail {
+  id: string;
+  name: string;
+  slug: string;
+  status: 'Stable' | 'Healthy' | 'Good' | 'Normal' | 'Monitor';
+  statusColor: 'emerald' | 'blue' | 'amber' | 'rose';
+  imagePath: string;
+  description: string;
   icon: string;
-  iconBg: string;
-  side: 'left' | 'right';
-  summary: string;
   primaryMetric: {
     label: string;
     value: string;
     unit?: string;
+    statusText: string;
   };
   metrics: {
     label: string;
     value: string;
-    status?: string;
-    statusColor?: string;
+    range?: string;
   }[];
-  indicators: {
+  waveformType: 'ecg' | 'eeg' | 'spiro' | 'nephron' | 'hepatic' | 'gastric';
+  keyIndicators: {
     label: string;
     value: string;
-    icon: string;
-    iconColor: string;
-    valueColor?: string;
+    level: 'Good' | 'Normal' | 'Low' | 'Moderate' | 'High' | 'None';
   }[];
-  waveformType: 'ecg' | 'eeg' | 'respiratory' | 'renal' | 'flow';
-}
-
-export interface VitalRecord {
-  id: string;
-  name: string;
-  value: string;
-  unit: string;
-  status: 'normal' | 'optimal' | 'attention';
-  statusText: string;
-  updated: string;
-  icon: string;
-  iconColor: string;
-  bgGradient: string;
-  strokeColor: string;
-  chartData: number[];
-  normalRange: string;
+  recentReadings?: {
+    time: string;
+    value: string;
+  }[];
 }
 
 export interface Medication {
   id: string;
   name: string;
   dosage: string;
+  instructions: string;
   frequency: string;
   time: string;
-  statusText: string;
-  statusType: 'upcoming' | 'taken' | 'scheduled';
-  instructions: string;
-  refillLeft: number;
-  doctor: string;
-  category: string;
+  status: 'Taken' | 'Upcoming' | 'Reminder';
+  dueText?: string;
+  category: 'cardiac' | 'metabolic' | 'supplement' | 'other';
+  startDate: string;
+  prescribedBy: string;
 }
 
 export interface MedicalDocument {
   id: string;
-  name: string;
-  date: string;
-  fileType: 'PDF' | 'Image' | 'DICOM';
-  fileSize: string;
+  title: string;
+  type: 'PDF' | 'Image' | 'DICOM';
   category: 'Reports' | 'Prescriptions' | 'Scans';
-  doctor: string;
+  date: string;
+  doctor?: string;
+  facility?: string;
   isNew?: boolean;
-  status: 'Available' | 'Processing';
+  size: string;
   summary?: string;
+  details?: {
+    findings: string[];
+    impression: string;
+    recommendation: string;
+  };
 }
 
 export interface Appointment {
@@ -95,19 +95,7 @@ export interface Appointment {
   hospital: string;
   date: string;
   time: string;
-  type: 'Video Consultation' | 'In-Person';
-  status: 'Upcoming' | 'Completed' | 'Cancelled';
+  type: 'In-Person' | 'Teleconsultation';
+  status: 'Confirmed' | 'Pending' | 'Completed';
   avatar: string;
-  meetingLink?: string;
-}
-
-export interface ConsentRecord {
-  id: string;
-  entityName: string;
-  role: string;
-  organization: string;
-  permissions: string[];
-  grantedDate: string;
-  expiresDate: string;
-  status: 'Active' | 'Revoked' | 'Expired';
 }

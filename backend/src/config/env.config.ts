@@ -13,7 +13,7 @@ export interface EnvironmentConfig {
 }
 
 export const config: EnvironmentConfig = {
-  port: parseInt(process.env.PORT || '3000', 10),
+  port: parseInt(process.env.PORT || '3001', 10),
   nodeEnv: process.env.NODE_ENV || 'development',
   mongodbUri: process.env.MONGODB_URI || 'mongodb://localhost:27017/medtwin',
   jwtSecret: process.env.JWT_SECRET || 'medtwin_default_dev_secret_key',

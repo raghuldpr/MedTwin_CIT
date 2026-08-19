@@ -10,6 +10,7 @@ import { generatePin } from '../utils/generatePin';
 import { hashPin, compareHashes } from '../utils/hash';
 import { AppError } from '../middleware/error.middleware';
 import { UserRole } from '../utils/roles';
+import { resolvePatientId } from '../utils/resolvePatientId';
 
 // Allowed expiration windows in minutes
 export const ALLOWED_EXPIRATION_MINUTES = [15, 30, 60, 240, 1440, 10080];
@@ -157,7 +158,9 @@ export const verifyDoctorPin = async (
   permissionLevel: PermissionLevel;
   expiresAt: Date;
 }> => {
-  if (!mongoose.Types.ObjectId.isValid(doctorId) || !mongoose.Types.ObjectId.isValid(patientId)) {
+  const resolvedPatientId = (await resolvePatientId(patientId)) || patientId;
+
+  if (!mongoose.Types.ObjectId.isValid(doctorId) || !mongoose.Types.ObjectId.isValid(resolvedPatientId)) {
     throw new AppError('Invalid ID format provided', 400);
   }
 
@@ -170,7 +173,7 @@ export const verifyDoctorPin = async (
 
   // Find candidate active consent for this patient
   const candidateConsents = await AccessConsent.find({
-    patientId: new mongoose.Types.ObjectId(patientId),
+    patientId: new mongoose.Types.ObjectId(resolvedPatientId),
     status: ConsentStatus.ACTIVE,
     $or: [
       { doctorId: null },
@@ -241,7 +244,9 @@ export const getActiveDoctorConsent = async (
   patientId: string,
   requiredPermission?: PermissionLevel
 ): Promise<IAccessConsentDocument | null> => {
-  if (!mongoose.Types.ObjectId.isValid(doctorId) || !mongoose.Types.ObjectId.isValid(patientId)) {
+  const resolvedPatientId = (await resolvePatientId(patientId)) || patientId;
+
+  if (!mongoose.Types.ObjectId.isValid(doctorId) || !mongoose.Types.ObjectId.isValid(resolvedPatientId)) {
     return null;
   }
 
@@ -250,7 +255,7 @@ export const getActiveDoctorConsent = async (
   // Lazy update: Mark any expired active consent records as EXPIRED
   await AccessConsent.updateMany(
     {
-      patientId: new mongoose.Types.ObjectId(patientId),
+      patientId: new mongoose.Types.ObjectId(resolvedPatientId),
       doctorId: new mongoose.Types.ObjectId(doctorId),
       status: ConsentStatus.ACTIVE,
       expiresAt: { $lte: now },
@@ -259,7 +264,7 @@ export const getActiveDoctorConsent = async (
   );
 
   const query: Record<string, unknown> = {
-    patientId: new mongoose.Types.ObjectId(patientId),
+    patientId: new mongoose.Types.ObjectId(resolvedPatientId),
     doctorId: new mongoose.Types.ObjectId(doctorId),
     status: ConsentStatus.ACTIVE,
     expiresAt: { $gt: now },

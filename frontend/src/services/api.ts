@@ -1,6 +1,6 @@
-﻿/**
+/**
  * MedTwin API Base Client
- * All fetch calls go through here. Backend is source of truth — no silent fallbacks.
+ * Handles HTTP requests, JWT authorization headers, and central 401 callbacks.
  */
 
 const TOKEN_KEY = 'medtwin_token';
@@ -27,7 +27,6 @@ export const getStoredToken = (): string | null => localStorage.getItem(TOKEN_KE
 export const setStoredToken = (token: string): void => localStorage.setItem(TOKEN_KEY, token);
 export const clearStoredToken = (): void => localStorage.removeItem(TOKEN_KEY);
 
-// Central dispatcher — one logout callback registered by AuthContext
 let _onUnauthorized: (() => void) | null = null;
 export const registerUnauthorizedCallback = (cb: () => void) => { _onUnauthorized = cb; };
 

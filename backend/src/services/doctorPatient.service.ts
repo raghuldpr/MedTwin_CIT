@@ -14,6 +14,7 @@ import { getSafeFilePath } from '../utils/storage.util';
 import fs from 'fs';
 import { AppError } from '../middleware/error.middleware';
 import { UserRole } from '../utils/roles';
+import { resolvePatientId } from '../utils/resolvePatientId';
 
 /**
  * 1. Retrieve the complete or basic Patient Digital Twin for an authorized doctor.
@@ -23,16 +24,18 @@ export const getAuthorizedPatientTwin = async (
   patientId: string,
   consent: IAccessConsentDocument
 ) => {
-  if (!mongoose.Types.ObjectId.isValid(patientId)) {
+  const resolvedPatientId = (await resolvePatientId(patientId)) || patientId;
+
+  if (!mongoose.Types.ObjectId.isValid(resolvedPatientId)) {
     throw new AppError('Invalid patient ID format', 400);
   }
 
-  const user = await User.findById(patientId);
+  const user = await User.findById(resolvedPatientId);
   if (!user || user.role !== UserRole.PATIENT || !user.isActive) {
     throw new AppError('Patient record not found', 404);
   }
 
-  const profile = await PatientTwinProfile.findOne({ userId: patientId });
+  const profile = await PatientTwinProfile.findOne({ userId: resolvedPatientId });
 
   const patientDemographics = {
     id: user._id.toString(),

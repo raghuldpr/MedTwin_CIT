@@ -233,7 +233,7 @@ export const analyzePatientDrugSafety = async (
     const ai = getGeminiClient();
 
     const response = await ai.models.generateContent({
-      model: 'gemini-3.7-flash',
+      model: 'gemini-2.5-flash',
       contents: `<untrusted_patient_record>\n${JSON.stringify(clinicalPayload)}\n</untrusted_patient_record>`,
       config: {
         systemInstruction: `You are the MedTwin AI Drug Safety and Conflict Decision Support Engine.

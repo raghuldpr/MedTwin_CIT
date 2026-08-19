@@ -6,6 +6,7 @@ import { createAuditLog } from '../services/auditLog.service';
 import { AuditAction, AuditResourceType, AuditOutcome } from '../models/AuditLog';
 import { AppError } from './error.middleware';
 import { UserRole } from '../utils/roles';
+import { resolvePatientId } from '../utils/resolvePatientId';
 
 // Augment Express Request interface for consent context
 declare global {
@@ -30,15 +31,17 @@ export const requirePatientConsent = (minPermission?: PermissionLevel) => {
         );
       }
 
-      const patientId =
+      const rawPatientId =
         req.params.patientId || (req.query.patientId as string) || req.body?.patientId;
 
-      if (!patientId) {
+      if (!rawPatientId) {
         return next(new AppError('Missing required patient ID parameter.', 400));
       }
 
-      if (!mongoose.Types.ObjectId.isValid(patientId)) {
-        return next(new AppError('Invalid patient ID format.', 400));
+      const patientId = await resolvePatientId(String(rawPatientId));
+
+      if (!patientId || !mongoose.Types.ObjectId.isValid(patientId)) {
+        return next(new AppError('Invalid patient ID format or patient not found.', 400));
       }
 
       const activeConsent = await getActiveDoctorConsent(req.user.id, patientId, minPermission);

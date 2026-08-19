@@ -1,4 +1,4 @@
-﻿/** Admin API Service */
+/** Admin API Service */
 import { get, patch } from './api';
 
 export interface AdminUser {

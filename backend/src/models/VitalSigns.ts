@@ -12,6 +12,7 @@ export interface IVitalSigns {
   systolicBP?: number;
   diastolicBP?: number;
   spo2?: number;
+  respiratoryRate?: number;
   bloodGlucose?: number;
   temperatureC?: number;
   recordedAt: Date;
@@ -46,6 +47,10 @@ const VitalSignsSchema = new Schema<IVitalSignsDocument>(
       type: Number,
       min: [0, 'SpO2 must be at least 0'],
       max: [100, 'SpO2 cannot exceed 100%'],
+    },
+    respiratoryRate: {
+      type: Number,
+      min: [0, 'Respiratory rate must be positive'],
     },
     bloodGlucose: {
       type: Number,

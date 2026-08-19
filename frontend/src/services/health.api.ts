@@ -1,4 +1,3 @@
-﻿/** Health check API */
 import { get } from './api';
 
 export const healthApi = {
